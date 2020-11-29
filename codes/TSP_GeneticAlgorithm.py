@@ -23,6 +23,18 @@ class City:
     
     def __repr__(self):  
         return "(" + str(self.x) + "," + str(self.y) + ")"
+
+    
+
+def evaldistance(city1, city2):
+        x = abs(city1[0] - city2[0])
+        y = abs(city2[1] - city2[1] )
+        
+        #Calculating Euclidean Distance
+        
+        distance = np.sqrt((x ** 2) + (y ** 2))
+        
+        return distance
     
 #Evaluates fitness
 class Fitness:
@@ -31,6 +43,9 @@ class Fitness:
         self.route = route
         self.distance = 0
         self.fitness = 0.0
+    
+
+    
     
     def EvalDistance(self):
         
@@ -48,7 +63,7 @@ class Fitness:
                 else:
                     toCity = self.route[0]
                 
-                currDistance += fromCity.distance(toCity)
+                currDistance += evaldistance(fromCity, toCity)
             
             self.distance = currDistance
         
@@ -179,53 +194,52 @@ def nextGeneration(currentGen, eliteSize, mutationRate):
 
 def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations):
     pop = initialPopulation(popSize, population)
-    #print("Initial distance: " + str(1 / rankRoutes(pop)[0][1]))
+    print("Initial distance: " + str(1 / rankRoutes(pop)[0][1]))
     
     for i in range(0, generations):
         pop = nextGeneration(pop, eliteSize, mutationRate)
     
-    #print("Final distance: " + str(1 / rankRoutes(pop)[0][1]))
+    print("Final distance: " + str(1 / rankRoutes(pop)[0][1]))
     
     bestRouteIndex = rankRoutes(pop)[0][0]
     bestRoute = pop[bestRouteIndex]
     
     #End time count
-    #end = time.time()
+    end = time.time()
     #Total Time
     #print(end-start)
     
     #Best Route
-    #print("Best Route is:", bestRoute)
+    print("Best Route is:", bestRoute)
     
     return bestRoute
 
-# def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations):
-#     pop = initialPopulation(popSize, population)
-#     progress = []
-#     progress.append(1 / rankRoutes(pop)[0][1])
-#
-#     for i in range(0, generations):
-#         pop = nextGeneration(pop, eliteSize, mutationRate)
-#         progress.append(1 / rankRoutes(pop)[0][1])
-#
-#     plt.plot(progress)
-#     plt.ylabel('Distance')
-#     plt.xlabel('Generation')
-#     plt.show()
+def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations):
+    pop = initialPopulation(popSize, population)
+    progress = []
+    progress.append(1 / rankRoutes(pop)[0][1])
+    
+    for i in range(0, generations):
+        pop = nextGeneration(pop, eliteSize, mutationRate)
+        progress.append(1 / rankRoutes(pop)[0][1])
+    
+    plt.plot(progress)
+    plt.ylabel('Distance')
+    plt.xlabel('Generation')
+    plt.show()
 
 
 #Generate Random n Cities
 
 cities = []
-for i in range(0,50):
+for i in range(0, 50):
     cities.append(City(x=int(random.random() * 100), y=int(random.random() * 100)))
 print(cities)
+    
+#start = time.time()
+cities = [(45,84), (85,24), (94,72), (94,10), (79,59), (4,25), (9,54), (31,0), (32,45), (24,38), (87,88), (62,75), (6,11), (96,7), (39,4), (66,85), (85,4), (13,39), (41,30), (84,57), (54,29), (64,0), (74,36), (20,37), (42,60), (70,66), (77,36), (32,64), (62,2), (10,53), (61,68), (21,21), (41,94), (49,50), (28,49), (18,34), (97,75), (80,43), (56,57), (46,66), (54,61), (51,13), (32,4), (70,59), (65,23), (68,37), (47,12), (55,18), (79,35), (2,8)]
+geneticAlgorithm(population=cities, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
 
-# start = time.time()
-from random import randint
-G = [(random.randint(1, 10000), randint(1, 10000)),(random.randint(1, 10000), randint(1, 10000))]
-
-geneticAlgorithm(population=G, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
 
 #geneticAlgorithmPlot(population=cityList, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
 
