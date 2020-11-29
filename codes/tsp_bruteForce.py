@@ -1,19 +1,10 @@
 from itertools import permutations
-import sys
-import os
-
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-
-from timeAnalysis import *
-
 
 def distance(p1, p2):
     d = (((p2[0] - p1[0]) ** 2) + ((p2[1] - p1[1]) ** 2)) ** .5
     return d
 
-def tsp(Points,start):
+def tspBrute(Points):
     length = len(Points) 
     min = None
     minroute = []
@@ -40,6 +31,3 @@ def tsp(Points,start):
 
 
 
-
-
-time_analasyis(tsp,30,"best","BruteForce")

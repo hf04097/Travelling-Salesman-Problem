@@ -179,39 +179,39 @@ def nextGeneration(currentGen, eliteSize, mutationRate):
 
 def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations):
     pop = initialPopulation(popSize, population)
-    print("Initial distance: " + str(1 / rankRoutes(pop)[0][1]))
+    #print("Initial distance: " + str(1 / rankRoutes(pop)[0][1]))
     
     for i in range(0, generations):
         pop = nextGeneration(pop, eliteSize, mutationRate)
     
-    print("Final distance: " + str(1 / rankRoutes(pop)[0][1]))
+    #print("Final distance: " + str(1 / rankRoutes(pop)[0][1]))
     
     bestRouteIndex = rankRoutes(pop)[0][0]
     bestRoute = pop[bestRouteIndex]
     
     #End time count
-    end = time.time()
+    #end = time.time()
     #Total Time
-    print(end-start)
+    #print(end-start)
     
     #Best Route
-    print("Best Route is:", bestRoute)
+    #print("Best Route is:", bestRoute)
     
     return bestRoute
 
-def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations):
-    pop = initialPopulation(popSize, population)
-    progress = []
-    progress.append(1 / rankRoutes(pop)[0][1])
-    
-    for i in range(0, generations):
-        pop = nextGeneration(pop, eliteSize, mutationRate)
-        progress.append(1 / rankRoutes(pop)[0][1])
-    
-    plt.plot(progress)
-    plt.ylabel('Distance')
-    plt.xlabel('Generation')
-    plt.show()
+# def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations):
+#     pop = initialPopulation(popSize, population)
+#     progress = []
+#     progress.append(1 / rankRoutes(pop)[0][1])
+#
+#     for i in range(0, generations):
+#         pop = nextGeneration(pop, eliteSize, mutationRate)
+#         progress.append(1 / rankRoutes(pop)[0][1])
+#
+#     plt.plot(progress)
+#     plt.ylabel('Distance')
+#     plt.xlabel('Generation')
+#     plt.show()
 
 
 #Generate Random n Cities
@@ -220,10 +220,12 @@ cities = []
 for i in range(0,50):
     cities.append(City(x=int(random.random() * 100), y=int(random.random() * 100)))
 print(cities)
-    
-start = time.time()
 
-geneticAlgorithm(population=cities, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
+# start = time.time()
+from random import randint
+G = [(random.randint(1, 10000), randint(1, 10000)),(random.randint(1, 10000), randint(1, 10000))]
+
+geneticAlgorithm(population=G, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
 
 #geneticAlgorithmPlot(population=cityList, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
 

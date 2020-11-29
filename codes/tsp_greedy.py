@@ -1,14 +1,5 @@
 import math
 
-import sys
-import os
-
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-
-from timeAnalysis import *
-
 
 def distance(p1, p2):
     """
@@ -45,4 +36,4 @@ def greedyTSP(G, start):
     return path, total_dist
 
 
-time_analasyis(greedyTSP, 100, "average", "Greedy")
+
