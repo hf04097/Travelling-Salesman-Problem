@@ -1,14 +1,19 @@
 from itertools import permutations
-import time 
-from numpy.random import seed 
-from numpy.random import randint 
-import matplotlib.pyplot as plt 
+import sys
+import os
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+from timeAnalysis import *
+
 
 def distance(p1, p2):
     d = (((p2[0] - p1[0]) ** 2) + ((p2[1] - p1[1]) ** 2)) ** .5
     return d
 
-def tsp(Points):
+def tsp(Points,start):
     length = len(Points) 
     min = None
     minroute = []
@@ -27,8 +32,14 @@ def tsp(Points):
                 minroute = perm
     return min, minroute
 
-points = [(40,72), (120,67), (174,36), (8,44)]
+# points = [(40,72), (120,67), (174,36), (8,44)]
+#
+# #print(points)
+# dist, route = tsp(points)
+# print((dist, route))
 
-#print(points)
-dist, route = tsp(points)
-print((dist, route))
+
+
+
+
+time_analasyis(tsp,30,"best","BruteForce")

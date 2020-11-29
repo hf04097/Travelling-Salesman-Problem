@@ -1,34 +1,48 @@
-import  math
+import math
 
-def distance(p1,p2):
-     return math.sqrt( ((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))
+import sys
+import os
 
-def greedyTSP(G,start):
-     n = len(G)
-     visited = [0 for e in G]
-     path = []
-     total_dist = 0
-     current = start
-    
-     for i in range(n):
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+from timeAnalysis import *
+
+
+def distance(p1, p2):
+    """
+    :return: distance between two points
+    """
+    return math.sqrt(((p1[0] - p2[0]) ** 2) + ((p1[1] - p2[1]) ** 2))
+
+
+def greedyTSP(G, start):
+    """
+    :param G: list of tuples with x and y coordinates of a city in the tuple
+    :param start: The city/point from which the journey will start
+    :return: The path taken and the distance covered.
+    """
+    n = len(G)
+    visited = [0 for e in G]  # keeping in record the cities visited
+    path = []
+    total_dist = 0
+    current = start
+
+    for i in range(n):
         min_dist = float("inf")
         min_k = -1
         for k in range(n):
             if visited[k] == 0:
-                dist_ = distance(current,G[k])
+                dist_ = distance(current, G[k])     # calculating the distance between current point and kth point
                 if dist_ < min_dist:
-                    min_dist = dist_
+                    min_dist = dist_        # if the distance is less than the minimum distance we will go to that city
                     min_k = k
         visited[min_k] = 1
         current = G[min_k]
         path.append(G[min_k])
         total_dist += dist_
-     return path, total_dist
+    return path, total_dist
 
 
-
-G = [(40,72), (120,67), (174,36), (8,44), (11,152), (116,102), (119,143), (149,24), (78,119), (188,140), (137,58),(143,57), (84,138),
-     (121,45), (51,23), (186,78), (76,124), (96,41), (4,64), (131,153), (167,5), (31,2), (30,3), (133,186), (124,167)]
-
-
-print(greedyTSP(G,(40,72)))
+time_analasyis(greedyTSP, 100, "average", "Greedy")
