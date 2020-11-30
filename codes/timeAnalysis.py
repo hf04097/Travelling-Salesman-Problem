@@ -12,7 +12,7 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from tsp_greedy import *
 from tsp_bruteForce import *
 from TSP_GeneticAlgorithm import *
-
+from tsp_dynamic import *
 
 def time_analysis(n):
     """
@@ -20,12 +20,17 @@ def time_analysis(n):
     :return: Plot of the input case
     """
     time_total_brute = []
+    time_total_dynamic = []
     time_total_greedy = []
     time_total_genetic = []
 
+    print(n)
+
     for x in range(10):
+        print(x)
         G = [(randint(1, 10000), randint(1, 10000))]  # starting from a random point
         time_taken_brute = []
+        time_taken_dynamic = []
         time_taken_greedy = []
         time_taken_genetic = []
         for t in range(1, n + 1):
@@ -39,6 +44,18 @@ def time_analysis(n):
             time_taken_brute.append(time_diff)
             start = None
             end = None
+
+            """
+            Dynamic
+            """
+            start = int(round(time.time() * 1000))  # converting to milliseconds from seconds
+            TSPMinDistanceDP(G[0],G[0],G)
+            end = int(round(time.time() * 1000))
+            time_diff = end - start
+            time_taken_dynamic.append(time_diff)
+            start = None
+            end = None
+
 
             """
             Greedy
@@ -65,10 +82,12 @@ def time_analysis(n):
             G.append((randint(1, 10000), randint(1, 10000)))
 
         time_total_brute.append(time_taken_brute)
-        time_total_brute_greedy.append(time_taken_greedy)
+        time_total_dynamic.append(time_taken_dynamic)
+        time_total_greedy.append(time_taken_greedy)
         time_total_genetic.append(time_taken_genetic)
 
     time_total_brute = np.array(time_total_brute)
+    time_total_dynamic = np.array(time_total_dynamic)
     time_total_greedy = np.array(time_total_greedy)
     time_total_genetic = np.array(time_total_genetic)
 
@@ -94,6 +113,26 @@ def time_analysis(n):
     plt.title("Worst case brute")
     plt.show()
 
+    """
+    for dynamic
+    """
+    plt.plot(numbers, time_total_dynamic.mean(axis=0))
+    plt.xlabel("number of cities")
+    plt.ylabel("time taken in milliseconds")
+    plt.title("Average case Dynamic")
+    plt.show()
+
+    plt.plot(numbers, time_total_dynamic.min(axis=0))
+    plt.xlabel("number of cities")
+    plt.ylabel("time taken in milliseconds")
+    plt.title("Best case Dynamic")
+    plt.show()
+
+    plt.plot(numbers, time_total_dynamic.max(axis=0))
+    plt.xlabel("number of cities")
+    plt.ylabel("time taken in milliseconds")
+    plt.title("Worst case Dynamic")
+    plt.show()
     """
     Greedy
     """
@@ -137,4 +176,4 @@ def time_analysis(n):
     plt.title("Worst case brute")
     plt.show()
 
-#time_analysis(5)
+time_analysis(3)
